@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ChatSnip Chat Exporter",
+  "version": "1.0",
+  "description": "Export AI chat content to clipboard or post to a given URL.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "options_page": "options.html",
+  "commands": {
+    "copy-chat-content": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Copy chat content to clipboard"
+    },
+    "post-chat-content": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Post chat content to a given URL"
+    }
+  }
+}

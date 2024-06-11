@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ChatSnip Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/journal/bootstrap.min.css"
+        integrity="sha512-i0XjXal2VCWv2R9nyqgvp/pPZGTG563h0djHqDDgu/8S9EIsLNpv+9WoqQFu3ngwDyD5I5WvwauQM1gyNXxsRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container" style="width: 500px;">
+        <h1 class="text-center my-5">ChatSnip Settings</h1>
+        <form id="settings-form">
+            <div class="form-group my-4">
+                <label for="post-url">Post URL:</label>
+                <input type="text" id="post-url" name="post-url" class="form-control">
+            </div>
+            <div class="form-group my-4">
+                <label for="api-key">API Key (Optional):</label>
+                <input type="text" id="api-key" name="api-key" class="form-control">
+            </div>
+            <div class="form-group my-4">
+                <label for="selectors">Selectors (comma-separated):</label>
+                <input type="text" id="selectors" name="selectors" class="form-control" value=".markdown,.message,.chat-message,.prose"
+                    placeholder=".markdown,.message,.chat-message,.prose">
+            </div>
+            <div class="text-center my-3">
+                <div class="row">
+                    <div class="col"><button id="reset-settings" class="btn btn-danger w-100">Reset Settings</button>
+                    </div>
+                    <div class="col"><input type="submit" value="Save" class="btn btn-primary w-100"></div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <script src="options.js"></script>
+</body>
+
+</html>

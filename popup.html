@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ChatSnip</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.3/journal/bootstrap.min.css"
+        integrity="sha512-i0XjXal2VCWv2R9nyqgvp/pPZGTG563h0djHqDDgu/8S9EIsLNpv+9WoqQFu3ngwDyD5I5WvwauQM1gyNXxsRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <div class="container" style="width: 550px;">
+        <div class="m-3">
+            <img src="icon.png" class="img-fluid d-block mx-auto mt-3" alt="ChatSnip Icon"
+                style="width: 100px; height: 100px; object-fit: contain; object-position: center; margin-bottom: 20px;">
+            <h1 class="text-center my-3">ChatSnip</h1>
+            <p class="m-3 text-center">ChatSnip will copy an entire chat you've had with an AI chatbot,
+                either to the clipboard or to a specified URL. You can also customize the chat selectors in the
+                settings.
+            </p>
+
+            <div class="row">
+                <div class="col"><button id="copy-chat" class="btn btn-primary btn-small small w-100">Copy Chat
+                    </button></div>
+                <div class="col"><button id="post-chat" class="btn btn-secondary  btn-small small w-100">Post Chat
+                    </button></div>
+                <div class="col"><a href="options.html" target="_blank"
+                        class="btn btn-info btn-small small w-100">Settings</a></div>
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
