@@ -13,7 +13,7 @@ document.getElementById('settings-form').addEventListener('submit', (event) => {
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get(['postUrl', 'apiKey', 'selectors'], (result) => {
-    console.log(4343423, result)
+    
     if (result.postUrl) {
       document.getElementById('post-url').value = result.postUrl;
     }
