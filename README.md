@@ -23,6 +23,7 @@ This extension supports customizable CSS selectors for chat elements, and it can
 2. Open Chrome and navigate to `chrome://extensions`.
 3. Enable Developer mode by toggling the switch in the top right corner.
 4. Click "Load unpacked" and select the extension directory.
+5. Go to the keyboard shortcut section in the chrome extensions setup and assign the keyboardshortcuts.
 
 ## Usage
 
