@@ -35,21 +35,42 @@ function getChatContent(selectors) {
 }
 
 function postChatContent() {
+  console.log("postChatContent function triggered.");
+
   chrome.storage.local.get(['postUrl', 'apiKey', 'selectors'], (result) => {
+    console.log("Storage retrieval attempted.");
+    console.log("Retrieved storage values:", result);
+
+    if (chrome.runtime.lastError) {
+      console.error("Error retrieving storage values:", chrome.runtime.lastError);
+      showToast("Error retrieving storage values: " + chrome.runtime.lastError.message);
+      return;
+    }
+
     const selectors = result.selectors ? result.selectors.split(',') : ['.markdown', '.message', '.chat-message', '.prose'];
-    const postUrl = result.postUrl || 'https://example.com/post';
+    const postUrl = result.postUrl || 'http://localhost:8000/api/chats/';
     const apiKey = result.apiKey || '';
+
+    console.log("Post URL:", postUrl);
+    console.log("API Key:", apiKey);
+    console.log("Selectors:", selectors);
+
     const { chatId, chatContent } = getChatContent(selectors);
 
     if (chatContent.trim() === "") {
       showToast("No chat content found to post.");
+      console.log("No chat content found.");
       return;
     }
 
+    console.log("Chat ID:", chatId);
+    console.log("Chat Content:", chatContent);
+
     const headers = {
-      'Content-Type': 'application/json',
-      ...(apiKey && { 'Authorization': `Bearer ${apiKey}` })
+      'Content-Type': 'application/json'
     };
+
+    console.log("Headers:", headers);
 
     const isJson = (str) => {
       try {
@@ -60,42 +81,66 @@ function postChatContent() {
       }
     };
 
+    const bodyContent = {
+      chatId,
+      content: chatContent,
+      apiKey: apiKey // Add API key to the body
+    };
+
     if (isJson(chatContent)) {
+      console.log("Chat content is JSON.");
       const jsonContent = JSON.parse(chatContent);
+      Object.assign(bodyContent, jsonContent);
+
       const postPromises = Object.keys(jsonContent).map(key => {
         return fetch(postUrl, {
           method: 'POST',
           headers,
-          body: JSON.stringify({ chatId, [key]: jsonContent[key] }),
+          body: JSON.stringify(Object.assign({}, bodyContent, { [key]: jsonContent[key] })),
         });
       });
 
       Promise.all(postPromises)
         .then(responses => Promise.all(responses.map(res => res.json())))
         .then(data => {
-          showToast("Chat content posted successfully!");
+          showToast(data.status);
         })
         .catch((error) => {
           console.error('Error:', error);
-          showToast("Failed to post chat content.");
+          showToast("Failed to post chat content: " + error);
         });
 
     } else {
+      console.log("Chat content is not JSON.");
       fetch(postUrl, {
         method: 'POST',
         headers,
-        body: JSON.stringify({ chatId, content: chatContent }),
+        body: JSON.stringify(bodyContent),
       })
-        .then(response => response.json())
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.json();
+        })
         .then(data => {
-          showToast("Chat content posted successfully!");
+          console.log("Post response:", data);
+          showToast(data.status);
         })
         .catch((error) => {
           console.error('Error:', error);
-          showToast("Failed to post chat content.");
+          showToast("Failed to post chat content: " + error);
         });
     }
   });
 }
 
-postChatContent();
+// Ensure the function is globally available
+window.postChatContent = postChatContent;
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === "postChatContent") {
+    postChatContent();
+    sendResponse({ status: "Content script received the message" });
+  }
+});

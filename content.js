@@ -37,6 +37,7 @@ function getChatContent(selectors) {
 function copyChatContent() {
   chrome.storage.local.get(['selectors'], (result) => {
     const selectors = result.selectors ? result.selectors.split(',') : ['.markdown', '.message', '.chat-message', '.prose'];
+    
     const { chatId, chatContent } = getChatContent(selectors);
 
     if (chatContent.trim() === "") {

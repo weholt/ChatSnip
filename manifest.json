@@ -4,13 +4,27 @@
   "version": "1.0",
   "description": "Export AI chat content to clipboard or post to a given URL.",
   "permissions": [
+    "storage",
     "activeTab",
     "scripting",
-    "storage"
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ],
   "background": {
     "service_worker": "background.js"
   },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "post_content.js"
+      ]
+    }
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -30,8 +44,8 @@
     },
     "post-chat-content": {
       "suggested_key": {
-        "default": "Ctrl+Shift+U",
-        "mac": "Command+Shift+U"
+        "default": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P"
       },
       "description": "Post chat content to a given URL"
     }
