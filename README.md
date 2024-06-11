@@ -1,4 +1,4 @@
-![ChatSnip Logo](./logo.png)
+![ChatSnip Logo](icon.png)
 
 # ChatSnip - (ChatGPT) Chat Exporter Chrome Extension
 
