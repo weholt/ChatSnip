@@ -1,3 +1,5 @@
+
+
 document.getElementById('settings-form').addEventListener('submit', (event) => {
   event.preventDefault();
 
@@ -6,14 +8,14 @@ document.getElementById('settings-form').addEventListener('submit', (event) => {
   const selectors = document.getElementById('selectors').value;
 
   chrome.storage.local.set({ postUrl, apiKey, selectors }, () => {
-    alert('Settings saved.');
+    showToast('Settings saved.');
   });
 
 });
 
 document.addEventListener('DOMContentLoaded', () => {
   chrome.storage.local.get(['postUrl', 'apiKey', 'selectors'], (result) => {
-    
+
     if (result.postUrl) {
       document.getElementById('post-url').value = result.postUrl;
     }
@@ -25,3 +27,4 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+

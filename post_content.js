@@ -15,6 +15,7 @@ function showToast(message) {
   }, 3000);
 }
 
+
 function getChatContent(selectors) {
   let chatContent = "";
   const chatId = window.location.href;
@@ -34,10 +35,20 @@ function getChatContent(selectors) {
   return { chatId, chatContent };
 }
 
+function getImages() {
+  const images = document.querySelectorAll('img');
+  return Array.from(images).map(img => ({
+      src: img.src,
+      alt: img.alt
+  }));    
+}
+
+
+
 function postChatContent() {
   console.log("postChatContent function triggered.");
 
-  chrome.storage.local.get(['postUrl', 'apiKey', 'selectors'], (result) => {
+  chrome.storage.local.get(['postUrl', 'apiKey', 'selectors', window.location.href], (result) => {
     console.log("Storage retrieval attempted.");
     console.log("Retrieved storage values:", result);
 
@@ -56,6 +67,7 @@ function postChatContent() {
     console.log("Selectors:", selectors);
 
     const { chatId, chatContent } = getChatContent(selectors);
+    const chatName = result[window.location.href] || window.location.href;
 
     if (chatContent.trim() === "") {
       showToast("No chat content found to post.");
@@ -64,7 +76,6 @@ function postChatContent() {
     }
 
     console.log("Chat ID:", chatId);
-    console.log("Chat Content:", chatContent);
 
     const headers = {
       'Content-Type': 'application/json'
@@ -81,10 +92,14 @@ function postChatContent() {
       }
     };
 
+    console.log(getImages())
+
     const bodyContent = {
       chatId,
       content: chatContent,
-      apiKey: apiKey // Add API key to the body
+      apiKey: apiKey,
+      chatName: chatName,
+      images: getImages()
     };
 
     if (isJson(chatContent)) {
@@ -135,12 +150,11 @@ function postChatContent() {
   });
 }
 
-// Ensure the function is globally available
-window.postChatContent = postChatContent;
-
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "postChatContent") {
     postChatContent();
     sendResponse({ status: "Content script received the message" });
   }
 });
+
+postChatContent();

@@ -15,6 +15,7 @@ function showToast(message) {
   }, 3000);
 }
 
+
 function getChatContent(selectors) {
   let chatContent = "";
   const chatId = window.location.href;
@@ -37,7 +38,6 @@ function getChatContent(selectors) {
 function copyChatContent() {
   chrome.storage.local.get(['selectors'], (result) => {
     const selectors = result.selectors ? result.selectors.split(',') : ['.markdown', '.message', '.chat-message', '.prose'];
-    
     const { chatId, chatContent } = getChatContent(selectors);
 
     if (chatContent.trim() === "") {
@@ -51,7 +51,6 @@ function copyChatContent() {
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
-
     showToast("Chat content copied to clipboard!");
   });
 }

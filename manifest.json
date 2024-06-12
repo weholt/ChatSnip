@@ -21,7 +21,8 @@
         "<all_urls>"
       ],
       "js": [
-        "post_content.js"
+        "post_content.js",
+        "common.js"
       ]
     }
   ],
