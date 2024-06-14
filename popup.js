@@ -19,12 +19,12 @@ document.getElementById('post-chat').addEventListener('click', () => {
 });
 
 document.getElementById('saveNameButton').addEventListener('click', () => {
-  const chatName = prompt("Please enter a name for this chat", "").trim();
+  const chatName = prompt("Please enter a name for this chat", "");
   console.log("Chat name:", chatName);
-  if (chatName !== '') {
+  if (chatName !== null && chatName.trim() !== '') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const currentUrl = tabs[0].url;
-      chrome.storage.local.set({ [currentUrl]: chatName }, () => {
+      chrome.storage.local.set({ [currentUrl]: chatName.trim() }, () => {
         console.log('Chat name saved:', chatName, currentUrl);
         showToast("Chat name saved: " + chatName);
       });

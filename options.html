@@ -25,6 +25,13 @@
                 <input type="text" id="selectors" name="selectors" class="form-control" value=".markdown,.message,.chat-message,.prose"
                     placeholder=".markdown,.message,.chat-message,.prose">
             </div>
+            <div class="form-group my-4">
+                <label for="format">Format:</label>
+                <select id="format" name="format" class="form-select">
+                    <option value="json" selected>JSON</option>
+                    <option value="markdown">Markdown</option>
+                </select>
+            </div>
             <div class="text-center my-3">
                 <div class="row">
                     <div class="col"><button id="reset-settings" class="btn btn-danger w-100">Reset Settings</button>

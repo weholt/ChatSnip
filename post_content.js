@@ -152,9 +152,11 @@ function postChatContent() {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "postChatContent") {
+    doda()
+    console.log("Content script received the message");
     postChatContent();
     sendResponse({ status: "Content script received the message" });
   }
 });
 
-postChatContent();
+//postChatContent();
