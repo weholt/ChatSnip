@@ -21,9 +21,10 @@
                 <input type="text" id="api-key" name="api-key" class="form-control">
             </div>
             <div class="form-group my-4">
-                <label for="selectors">Selectors (comma-separated):</label>
-                <input type="text" id="selectors" name="selectors" class="form-control" value=".markdown,.message,.chat-message,.prose"
-                    placeholder=".markdown,.message,.chat-message,.prose">
+                <label for="chat_bot">ChatBot:</label>
+                <select id="chat_bot" name="chat_bot" class="form-select">
+                    <option value="chatgpt" selected>ChatGPT</option>
+                </select>
             </div>
             <div class="form-group my-4">
                 <label for="format">Format:</label>

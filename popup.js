@@ -4,7 +4,14 @@ document.getElementById('copy-chat').addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
       target: { tabId: tabs[0].id },
-      files: ['content.js']
+      files: ['common.js', 'content.js']
+    }, () => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        function: () => { copy_to_clipboard(); },
+      }, (results) => {
+        console.log("Results copy:", results);
+      });
     });
   });
 });
@@ -13,13 +20,20 @@ document.getElementById('post-chat').addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
       target: { tabId: tabs[0].id },
-      files: ['post_content.js']
+      files: ['common.js', 'content.js']
+    }, () => {
+      chrome.scripting.executeScript({
+        target: { tabId: tabs[0].id },
+        function: () => { postChatContent(); },
+      }, (results) => {
+        console.log("Results post:", results);
+      });
     });
   });
 });
 
 document.getElementById('saveNameButton').addEventListener('click', () => {
-  const chatName = prompt("Please enter a name for this chat", "");
+  const chatName = prompt("Please enter a name for this chat", document.title);
   console.log("Chat name:", chatName);
   if (chatName !== null && chatName.trim() !== '') {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
